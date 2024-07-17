@@ -1,36 +1,52 @@
-import { Component } from '@angular/core';
-import { injectContentFiles } from '@analogjs/content';
+import { Component, OnInit } from '@angular/core';
 import PostAttributes from '../../post-attributes';
 import { RouterLink } from '@angular/router';
+import { BlogService } from '../../services/blog.service';
 
 @Component({
   selector: 'app-blog',
   standalone: true,
   imports: [RouterLink],
   template: `
-    <h1>Blog Archive</h1>
-    @for (post of posts;track post.attributes.slug) {
-    <a [routerLink]="['/blog/', post.attributes.slug]">
-      <h2 class="post__title">{{ post.attributes.title }}</h2>
-      <p class="post__desc">{{ post.attributes.description }}</p>
-    </a>
-    }
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold text-center my-10 dark:text-white">{{title}}</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (post of posts; track $index) {
+        <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+
+          <a [routerLink]="['/blog/', post.slug]" class="block p-6">
+            <h2 class="text-xl font-semibold mb-2 dark:text-white">{{ post.title }}</h2>
+            <p class="text-gray-700 dark:text-gray-400">{{ post.description }}</p>
+          </a>
+
+        </div>
+      }
+      </div>
+    </div>
   `,
   styles: [
     `
-      a {
-        text-align: left;
-        display: block;
-        margin-bottom: 2rem;
-      }
-
-      .post__title,
-      .post__desc {
-        margin: 0;
+      @media (prefers-color-scheme: dark) {
+        :host {
+          --tw-text-opacity: 1;
+          color: rgba(255, 255, 255, var(--tw-text-opacity));
+        }
       }
     `,
   ],
 })
-export default class HomeComponent {
-  readonly posts = injectContentFiles<PostAttributes>();
+export default class HomeComponent implements OnInit {
+  posts!: PostAttributes[];
+  title: string = '';
+
+  constructor(private blogService: BlogService) { }
+
+  ngOnInit() {
+    this.blogService.getPosts().subscribe((posts) => {
+      console.log(posts);
+      this.title = posts['title']
+
+      this.posts = posts['items'];
+    });
+  }
 }
