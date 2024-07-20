@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import PostAttributes from '../../post-attributes';
+import  PostAttributes, { FeedAttributes } from '../../post-attributes';
 import { RouterLink } from '@angular/router';
 import { BlogService } from '../../services/blog.service';
 
@@ -44,9 +44,9 @@ export default class HomeComponent implements OnInit {
   ngOnInit() {
     this.blogService.getPosts().subscribe((posts) => {
       console.log(posts);
-      this.title = posts['title']
+      this.title = posts.title;
 
-      this.posts = posts['items'];
+      this.posts = posts.items;
     });
   }
 }

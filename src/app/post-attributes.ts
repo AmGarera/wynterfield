@@ -9,6 +9,34 @@ export default interface PostAttributes {
   nextUrl: string;
 }
 
+export interface Attachment {
+  url: string;
+  mime_type: string;
+  size_in_bytes: number;
+  duration_in_seconds: number;
+}
+
+export interface Microfeed {
+  status: string;
+  is_audio: boolean;
+  is_document: boolean;
+  is_external_url: boolean;
+  is_video: boolean;
+  is_image: boolean;
+  web_url: string;
+  json_url: string;
+  rss_url: string;
+  guid: string;
+  date_published_short: string;
+  date_published_ms: number;
+  ["itunes:title"]: string;
+  ["itunes:block"]: boolean;
+  ["itunes:episodeType"]: string;
+  ["itunes:season"]: number;
+  ["itunes:episode"]: number;
+  ["itunes:explicit"]: boolean;
+}
+
 export interface FeedAttributes {
   id: string;
   title: string;
@@ -19,31 +47,6 @@ export interface FeedAttributes {
   image: string;
   bannerImage: string;
   datePublished: string;
-  microfeed: {
-    status: string;
-    isAudio: boolean;
-    isDocument: boolean;
-    isExternalUrl: boolean;
-    isVideo: boolean;
-    isImage: boolean;
-    webUrl: string;
-    jsonUrl: string;
-    rssUrl: string;
-    guid: string;
-    datePublishedShort: string;
-    datePublishedMs: number;
-    itunesTitle: string;
-    itunesBlock: boolean;
-    itunesEpisodeType: string;
-    itunesSeason: number;
-    itunesEpisode: number;
-    itunesExplicit: boolean;
-  };
-}
-
-interface Attachment {
-  url: string;
-  mimeType: string;
-  sizeInBytes: number;
-  durationInSeconds: number;
+  microfeed: Microfeed;
+  items: PostAttributes[];
 }
