@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { injectContent, MarkdownComponent } from '@analogjs/content';
 import { AsyncPipe } from '@angular/common';
 
-import PostAttributes, { FeedAttributes } from '../../post-attributes';
+import { FeedAttributes } from '../../post-attributes';
 import { BlogService } from '../../services/blog.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -10,12 +9,12 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-blog-post',
   standalone: true,
-  imports: [AsyncPipe, MarkdownComponent],
+  imports: [AsyncPipe],
   template: `
     @if (post$ | async; as post) {
-    <article>
-      <img class="post__image" [src]="post.items[0].image" />
-      <div [innerHTML]="post.items[0].content_html"></div>
+    <article class="max-w-4xl mx-auto p-5">
+      <img class="post__image w-full h-auto object-cover object-center mb-8" [src]="post.items[0].image" />
+      <div class="prose prose-lg max-w-none" [innerHTML]="post.items[0].content_html"></div>
     </article>
     }
   `,
@@ -38,7 +37,6 @@ export default class BlogPostComponent {
         // Use this.slug as needed, for example, to fetch blog details
         if (slug) {
           this.post$ = this.blogService.getPostBySlug(slug);
-          console.log(this.post$.subscribe(res => console.log("Response:", res)));
         }
   }
 }
