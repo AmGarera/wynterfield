@@ -7,7 +7,7 @@ import PostAttributes, { FeedAttributes } from '../post-attributes';
   providedIn: 'root',
 })
 export class BlogService {
-  private apiUrl = 'https://wynterfield.com';
+  private apiUrl = 'https://posts.wynterfield.com';
 
   constructor(private http: HttpClient) {}
 
