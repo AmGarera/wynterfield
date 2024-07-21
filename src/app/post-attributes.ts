@@ -37,6 +37,19 @@ export interface Microfeed {
   ["itunes:explicit"]: boolean;
 }
 
+export interface Item {
+  id: string;
+  title: string;
+  attachments: Attachment[];
+  url: string;
+  content_html: string;
+  content_text: string;
+  image: string;
+  bannerImage: string;
+  date_published: string;
+  microfeed: Microfeed;
+}
+
 export interface FeedAttributes {
   id: string;
   title: string;
@@ -48,5 +61,5 @@ export interface FeedAttributes {
   bannerImage: string;
   datePublished: string;
   microfeed: Microfeed;
-  items: PostAttributes[];
+  items: Item[];
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import  PostAttributes, { FeedAttributes } from '../../post-attributes';
+import  PostAttributes, { FeedAttributes, Item } from '../../post-attributes';
 import { RouterLink } from '@angular/router';
 import { BlogService } from '../../services/blog.service';
 
@@ -14,9 +14,9 @@ import { BlogService } from '../../services/blog.service';
       @for (post of posts; track $index) {
         <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg">
 
-          <a [routerLink]="['/blog/', post.slug]" class="block p-6">
+          <a [routerLink]="['/blog/', post.id]" class="block p-6">
             <h2 class="text-xl font-semibold mb-2 dark:text-white">{{ post.title }}</h2>
-            <p class="text-gray-700 dark:text-gray-400">{{ post.description }}</p>
+            <p class="text-gray-700 dark:text-gray-400">{{ post.contentText }}</p>
           </a>
 
         </div>
@@ -36,7 +36,7 @@ import { BlogService } from '../../services/blog.service';
   ],
 })
 export default class HomeComponent implements OnInit {
-  posts!: PostAttributes[];
+  posts!: Item[];
   title: string = '';
 
   constructor(private blogService: BlogService) { }
